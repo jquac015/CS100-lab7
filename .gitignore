@@ -1,0 +1,9 @@
+.factory.hpp.swp
+CMakeCache.txt
+CMakeFiles/
+Makefile
+calculator
+cmake_install.cmake
+lib/
+test
+
