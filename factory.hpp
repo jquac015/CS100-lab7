@@ -12,7 +12,8 @@
 #include <string>
 #include <iostream>
 #include <queue>
-
+#include <stack>
+#include <vector>
 class factory{
 public:
     factory(){};
@@ -32,59 +33,66 @@ public:
             }
         }
 
-        std::queue<Base*> calculate;
+        std::vector<Base*> calculate;
+        int sz = num.size();
+        for(int i = 0; i < sz; ++i){
+            Op* in = new Op(stod(static_cast<std::string>(num.front())));
+            calculate.push_back(in);
+            num.pop();
+        }
+        std::stack<Base*> eval;
+        for(int i = sz; i > 0; --i){
+            eval.push(calculate[i - 1]);
+        }
         Base* left;
         Base* right;
         Base* tempRes;
         double numRes;
-        while(!num.empty()){
+        while(!op.empty()){
             std::string ope = static_cast<std::string>(op.front());
             if (ope == "+"){
-                //not sure if it works fine
-                left = reinterpret_cast<Base *>(num.front());
-                num.pop();
-                right = reinterpret_cast<Base *>(num.front());
-                num.pop();
+                left = eval.top();
+                eval.pop();
+                right = eval.top();
+                eval.pop();
                 tempRes = new Add(left, right);
-                calculate.push(tempRes);
+                eval.push(tempRes);
                 op.pop();
             } else if (ope == "-"){
-                left = reinterpret_cast<Base *>(num.front());
-                num.pop();
-                right = reinterpret_cast<Base *>(num.front());
-                num.pop();
+                left = eval.top();
+                eval.pop();
+                right = eval.top();
+                eval.pop();
                 tempRes = new Sub(left, right);
-                calculate.push(tempRes);
+                eval.push(tempRes);
                 op.pop();
             } else if (ope == "*") {
-                left = reinterpret_cast<Base *>(num.front());
-                num.pop();
-                right = reinterpret_cast<Base *>(num.front());
-                num.pop();
+                left = eval.top();
+                eval.pop();
+                right = eval.top();
+                eval.pop();
                 tempRes = new Mult(left, right);
-                calculate.push(tempRes);
+                eval.push(tempRes);
                 op.pop();
             } else if (ope == "/") {
-                left = reinterpret_cast<Base *>(num.front());
-                num.pop();
-                right = reinterpret_cast<Base *>(num.front());
-                num.pop();
+                left = eval.top();
+                eval.pop();
+                right = eval.top();
+                eval.pop();
                 tempRes = new Div(left, right);
-                calculate.push(tempRes);
+                eval.push(tempRes);
                 op.pop();
             } else if (ope == "**") {
-                left = reinterpret_cast<Base *>(num.front());
-                num.pop();
-                right = reinterpret_cast<Base *>(num.front());
-                num.pop();
+                left = eval.top();
+                eval.pop();
+                right = eval.top();
+                eval.pop();
                 tempRes = new Pow(left, right);
-                calculate.push(tempRes);
+                eval.push(tempRes);
                 op.pop();
-            } else {
-                //final result
-                return calculate.front();
             }
         }
+        return eval.top();
     }
 };
 
