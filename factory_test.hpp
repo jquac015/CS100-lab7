@@ -30,6 +30,19 @@ TEST(FactoryTest, EvaluateSimpleAddDecimal) {
     EXPECT_EQ(test->evaluate(), 11);
     EXPECT_EQ(test->stringify(), "5.500000+5.500000");
 }
+TEST(FactoryTest, EvaluateSimpleAddNeg) {
+    int len = 4;
+    char** expression = new char*[len];
+    expression[0] = "./calculator";
+    expression[1] = "-5";
+    expression[2] = "+";
+    expression[3] = "5";
+    factory* f = new factory();
+    Base* test = f->parse(expression, len);
+    EXPECT_EQ(test->evaluate(), 0);
+    EXPECT_EQ(test->stringify(), "(-5.000000)+5.000000");
+}
+
 
 TEST(FactoryTest, EvaluateSimpleSubtract) {
     int len = 4;
@@ -54,6 +67,18 @@ TEST(FactoryTest, EvaluateSimpleSubtractDecimal) {
     Base* test = f->parse(expression, len);
     EXPECT_NEAR(test->evaluate(), 0.3, 1);
     EXPECT_EQ(test->stringify(), "5.500000-5.200000");
+}
+TEST(FactoryTest, EvaluateSimpleSubtractNeg) {
+    int len = 4;
+    char** expression = new char*[len];
+    expression[0] = "./calculator";
+    expression[1] = "-5";
+    expression[2] = "-";
+    expression[3] = "5";
+    factory* f = new factory();
+    Base* test = f->parse(expression, len);
+    EXPECT_EQ(test->evaluate(), -10);
+    EXPECT_EQ(test->stringify(), "(-5.000000)-5.000000");
 }
 
 
@@ -81,6 +106,18 @@ TEST(FactoryTest, EvaluateSimpleMultiplyDecimal) {
     EXPECT_NEAR(test->evaluate(), 29.64, 1);
     EXPECT_EQ(test->stringify(), "5.700000*5.200000");
 }
+TEST(FactoryTest, EvaluateSimpleMultiplyNeg) {
+    int len = 4;
+    char** expression = new char*[len];
+    expression[0] = "./calculator";
+    expression[1] = "-5";
+    expression[2] = "\*";
+    expression[3] = "5";
+    factory* f = new factory();
+    Base* test = f->parse(expression, len);
+    EXPECT_EQ(test->evaluate(), -25);
+    EXPECT_EQ(test->stringify(), "(-5.000000)*5.000000");
+}
 
 TEST(FactoryTest, EvaluateSimpleDivide) {
     int len = 4;
@@ -93,6 +130,18 @@ TEST(FactoryTest, EvaluateSimpleDivide) {
     Base* test = f->parse(expression, len);
     EXPECT_EQ(test->evaluate(), 1);
     EXPECT_EQ(test->stringify(), "5.000000/5.000000");
+}
+TEST(FactoryTest, EvaluateSimpleDivideNeg) {
+    int len = 4;
+    char** expression = new char*[len];
+    expression[0] = "./calculator";
+    expression[1] = "-5";
+    expression[2] = "/";
+    expression[3] = "5";
+    factory* f = new factory();
+    Base* test = f->parse(expression, len);
+    EXPECT_EQ(test->evaluate(), -1);
+    EXPECT_EQ(test->stringify(), "(-5.000000)/5.000000");
 }
 TEST(FactoryTest, EvaluateSimpleDivideDecimal) {
     int len = 4;
@@ -119,6 +168,18 @@ TEST(FactoryTest, EvaluateSimplePower) {
     Base* test = f->parse(expression, len);
     EXPECT_EQ(test->evaluate(), 3125);
     EXPECT_EQ(test->stringify(), "5.000000**5.000000");
+}
+TEST(FactoryTest, EvaluateSimplePowerNeg) {
+    int len = 4;
+    char** expression = new char*[len];
+    expression[0] = "./calculator";
+    expression[1] = "-5";
+    expression[2] = "**";
+    expression[3] = "5";
+    factory* f = new factory();
+    Base* test = f->parse(expression, len);
+    EXPECT_EQ(test->evaluate(), -3125);
+    EXPECT_EQ(test->stringify(), "(-5.000000)**5.000000");
 }
 TEST(FactoryTest, EvaluateSimplePowerDecimal) {
     int len = 4;
@@ -159,11 +220,11 @@ TEST(FactoryTest, EvaluateMixed) {
     int len = 12;
     char** expression = new char*[len];
     expression[0] = "./calculator";
-    expression[1] = "5.2";
+    expression[1] = "-5.2";
     expression[2] = "**";
     expression[3] = "3.0";
     expression[4] = "*";
-    expression[5] = "1.1";
+    expression[5] = "-1.1";
     expression[6] = "/";
     expression[7] = "5.2";
     expression[8] = "+";
@@ -173,33 +234,7 @@ TEST(FactoryTest, EvaluateMixed) {
     factory* f = new factory();
     Base* test = f->parse(expression, len);
     EXPECT_NEAR(test->evaluate(), 33.554, 1);
-    EXPECT_EQ(test->stringify(), "5.200000**3.000000*1.100000/5.200000+10.900000-7.100000");
+    EXPECT_EQ(test->stringify(), "(-5.200000)**3.000000*(-1.100000)/5.200000+10.900000-7.100000");
 }
-
-TEST(FactoryTest, EvaluateSimpleAdd) {
-    char** p = new char*[3];
-    p[0] = "./calculator";
-    p[1] = "-9";
-    p[2] = "+";
-    p[3] = "10";
-    factory* f = new factory();
-    Base* test = f->parse(p, 4);
-    EXPECT_EQ(test->evaluate(), 1);
-    EXPECT_EQ(test->stringify(), "(-9.000000)+10.000000");
-}
-
-TEST(FactoryTest, EvaluateSimpleMinus) {
-    char** p = new char*[3];
-    p[0] = "./calculator";
-    p[1] = "10";
-    p[2] = "-";
-    p[3] = "9";
-    factory* f = new factory();
-    Base* test = f->parse(p, 4);
-    EXPECT_EQ(test->evaluate(), 1);
-    EXPECT_EQ(test->stringify(), "10.000000-9.000000");
-}
-
-
 
 #endif
