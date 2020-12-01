@@ -26,20 +26,8 @@ public:
             if (isdigit(temp[0])) {
                 num.push(input[i]);
 	    } else if (temp == " "){
-            } else if (temp == "+" || temp == "-"){
+            } else if (temp == "+" || temp == "-" || temp == "*" || temp == "/" || temp == "**"){
                 op.push(input[i]);
-	    } else if (temp == "*" || temp == "/"){
-		if(op.back() == "+" || op.back() == "-"){
-			std::cout << "Operations out of order." << std::endl;
-	                return nullptr;
-		}
-		op.push(input[i]);
-	    } else if (temp == "**"){
-		if(op.back() == "*" || op.back() == "/" || op.back() == "+" || op.back() == "-"){
-			std::cout << "Operations out of order." << std::endl;
-                        return nullptr;
-		}
-		op.push(input[i]);
             } else {
                 std::cout << "Please type equation again." << std::endl;
                 return nullptr;

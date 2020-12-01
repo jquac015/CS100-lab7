@@ -6,4 +6,9 @@ calculator
 cmake_install.cmake
 lib/
 test
-
+.factory.hpp.swo
+.factory_test.hpp.swk
+.factory_test.hpp.swl
+.factory_test.hpp.swm
+.factory_test.hpp.swn
+.factory_test.hpp.swo
