@@ -176,4 +176,30 @@ TEST(FactoryTest, EvaluateMixed) {
     EXPECT_EQ(test->stringify(), "5.200000**3.000000*1.100000/5.200000+10.900000-7.100000");
 }
 
+TEST(FactoryTest, EvaluateSimpleAdd) {
+    char** p = new char*[3];
+    p[0] = "./calculator";
+    p[1] = "-9";
+    p[2] = "+";
+    p[3] = "10";
+    factory* f = new factory();
+    Base* test = f->parse(p, 4);
+    EXPECT_EQ(test->evaluate(), 1);
+    EXPECT_EQ(test->stringify(), "(-9.000000)+10.000000");
+}
+
+TEST(FactoryTest, EvaluateSimpleMinus) {
+    char** p = new char*[3];
+    p[0] = "./calculator";
+    p[1] = "10";
+    p[2] = "-";
+    p[3] = "9";
+    factory* f = new factory();
+    Base* test = f->parse(p, 4);
+    EXPECT_EQ(test->evaluate(), 1);
+    EXPECT_EQ(test->stringify(), "10.000000-9.000000");
+}
+
+
+
 #endif

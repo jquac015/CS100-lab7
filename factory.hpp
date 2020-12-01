@@ -23,7 +23,7 @@ public:
         std::string temp;
         for(int i = 1; i < length; ++i) {
             temp = static_cast<std::string>(input[i]);
-            if (isdigit(temp[0])) {
+            if (isdigit(temp[0]) || isdigit(temp[1])) {
                 num.push(input[i]);
 	    } else if (temp == " "){
             } else if (temp == "+" || temp == "-" || temp == "*" || temp == "/" || temp == "**"){
