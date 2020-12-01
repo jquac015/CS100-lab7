@@ -25,15 +25,14 @@ public:
             temp = static_cast<std::string>(input[i]);
             if (isdigit(temp[0]) || isdigit(temp[1])) {
                 num.push(input[i]);
-	    } else if (temp == " "){
-            } else if (temp == "+" || temp == "-" || temp == "*" || temp == "/" || temp == "**"){
+	    } else if (temp == "+" || temp == "-" || temp == "*" || temp == "/" || temp == "**"){
                 op.push(input[i]);
             } else {
                 std::cout << "Please type equation again." << std::endl;
                 return nullptr;
             }
         }
-	if ((num.size()-1) == op.size()){
+	if ((num.size()-1) != op.size()){
 		std::cout << "Please type equation again." << std::endl;
                 return nullptr;
 	}
