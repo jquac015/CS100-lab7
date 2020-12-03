@@ -187,11 +187,11 @@ TEST(FactoryTest, EvaluateSimplePowerDecimal) {
     expression[0] = "./calculator";
     expression[1] = "5.1";
     expression[2] = "**";
-    expression[3] = "5.0";
+    expression[3] = "5.1";
     factory* f = new factory();
     Base* test = f->parse(expression, len);
-    EXPECT_NEAR(test->evaluate(), 3450.2525, 1);
-    EXPECT_EQ(test->stringify(), "5.100000**5.000000");
+    EXPECT_NEAR(test->evaluate(), 4060.7654, 1);
+    EXPECT_EQ(test->stringify(), "5.100000**5.100000");
 }
 
 
@@ -220,9 +220,9 @@ TEST(FactoryTest, EvaluateMixed) {
     int len = 12;
     char** expression = new char*[len];
     expression[0] = "./calculator";
-    expression[1] = "-5.2";
+    expression[1] = "5.2";
     expression[2] = "**";
-    expression[3] = "3.0";
+    expression[3] = "3.1";
     expression[4] = "*";
     expression[5] = "-1.1";
     expression[6] = "/";
@@ -233,8 +233,8 @@ TEST(FactoryTest, EvaluateMixed) {
     expression[11] = "7.1";
     factory* f = new factory();
     Base* test = f->parse(expression, len);
-    EXPECT_NEAR(test->evaluate(), 33.554, 1);
-    EXPECT_EQ(test->stringify(), "(-5.200000)**3.000000*(-1.100000)/5.200000+10.900000-7.100000");
+    EXPECT_NEAR(test->evaluate(), -31.275, 1);
+    EXPECT_EQ(test->stringify(), "5.200000**3.100000*(-1.100000)/5.200000+10.900000-7.100000");
 }
 
 #endif
