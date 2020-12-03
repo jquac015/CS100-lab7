@@ -233,7 +233,7 @@ TEST(FactoryTest, EvaluateMixed) {
     expression[11] = "7.1";
     factory* f = new factory();
     Base* test = f->parse(expression, len);
-    EXPECT_NEAR(test->evaluate(), -31.275, 1);
+    EXPECT_NEAR(test->evaluate(), -31.275 , 1 ) ;
     EXPECT_EQ(test->stringify(), "5.200000**3.100000*(-1.100000)/5.200000+10.900000-7.100000");
 }
 
